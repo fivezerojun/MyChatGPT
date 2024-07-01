@@ -7,7 +7,6 @@ import { parseEventSource } from '@api/helper';
 import { limitMessageTokens, updateTotalTokenUsed } from '@utils/messageUtils';
 import { _defaultChatConfig } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
-import { startCase } from 'lodash';
 
 const useSubmit = () => {
   const { t, i18n } = useTranslation('api');
@@ -115,19 +114,20 @@ const useSubmit = () => {
             partial + new TextDecoder().decode(value)
           );
           partial = '';
+
           if (result === '[DONE]' || done) {
             reading = false;
           } else {
-            
             const resultString = result.reduce((output: string, curr) => {
               if (typeof curr === 'string') {
                 partial += curr;
               } else {
-                const content = curr.choices && curr.choices.length > 0 && curr.choices[0].delta.content; //curr.choices[0].delta.content;
+                const content = curr.choices[0]?.delta?.content ?? null;
                 if (content) output += content;
               }
               return output;
             }, '');
+
             const updatedChats: ChatInterface[] = JSON.parse(
               JSON.stringify(useStore.getState().chats)
             );
@@ -144,6 +144,7 @@ const useSubmit = () => {
         reader.releaseLock();
         stream.cancel();
       }
+
       // update tokens used in chatting
       const currChats = useStore.getState().chats;
       const countTotalTokens = useStore.getState().countTotalTokens;
@@ -185,6 +186,7 @@ const useSubmit = () => {
         updatedChats[currentChatIndex].title = title;
         updatedChats[currentChatIndex].titleSet = true;
         setChats(updatedChats);
+
         // update tokens used for generating title
         if (countTotalTokens) {
           const model = _defaultChatConfig.model;
