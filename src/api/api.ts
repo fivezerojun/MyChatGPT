@@ -28,11 +28,14 @@ export const getChatCompletion = async (
     const model = modelmapping[config.model] || config.model;
 
     // set api version to 2023-07-01-preview for gpt-4 and gpt-4-32k, otherwise use 2023-03-15-preview
+//     const apiVersion =
+//       model === 'gpt-4' || model === 'gpt-4-32k'
+//         ? '2023-07-01-preview'
+//         : '2023-03-15-preview';
     const apiVersion =
-      model === 'gpt-4' || model === 'gpt-4-32k'
-        ? '2023-07-01-preview'
-        : '2023-03-15-preview';
-
+      model === 'chatgpt-4o'
+        ? '2024-02-15-preview'
+        : '2024-02-01';
     const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
@@ -81,11 +84,38 @@ export const getChatCompletionStream = async (
 
     const model = modelmapping[config.model] || config.model;
 
+//     // set api version to 2023-07-01-preview for gpt-4 and gpt-4-32k, otherwise use 2023-03-15-preview
+//     const apiVersion =
+//       model === 'gpt-4' || model === 'gpt-4-32k'
+//         ? '2024-02-01'
+//         : '2024-02-15-preview';
     // set api version to 2023-07-01-preview for gpt-4 and gpt-4-32k, otherwise use 2023-03-15-preview
     const apiVersion =
-      model === 'gpt-4' || model === 'gpt-4-32k'
-        ? '2024-02-01'
-        : '2023-03-15-preview';
+      model === 'chatgpt-4o'
+        ? '2024-02-15-preview'
+        : '2024-02-01';
+//     let apiVersion = '2023-03-15-preview';
+//     switch(model) {
+//       case 'gpt-4':
+//         apiVersion = '2024-02-01';
+//         break;
+//       case 'chatgpt-4o':
+//         apiVersion = '2024-02-15-preview';
+//         break;
+//       case 'gpt-35-turbo':
+//         apiVersion = '2024-02-01';
+//         break;
+//       case 'gpt-35-turbo-16k':
+//         apiVersion = '2023-03-15-preview';
+//         break;
+//       case 'gpt-35-turbo-1106':
+//         apiVersion = '2023-03-15-preview';
+//         break;
+//       case 'gpt-35-turbo-0125':
+//         apiVersion = '2023-03-15-preview';
+//         break;
+//     }
+
     const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
