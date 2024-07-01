@@ -23,6 +23,7 @@ export const getChatCompletion = async (
       'gpt-3.5-turbo-16k': 'gpt-35-turbo-16k',
       'gpt-3.5-turbo-1106': 'gpt-35-turbo-1106',
       'gpt-3.5-turbo-0125': 'gpt-35-turbo-0125',
+      'gpt-4o': 'chatgpt-4o',
     };
 
     const model = modelmapping[config.model] || config.model;
@@ -80,6 +81,7 @@ export const getChatCompletionStream = async (
     const modelmapping: Partial<Record<ModelOptions, string>> = {
       'gpt-3.5-turbo': 'gpt-35-turbo',
       'gpt-3.5-turbo-16k': 'gpt-35-turbo-16k',
+      'gpt-4o': 'chatgpt-4o',
     };
 
     const model = modelmapping[config.model] || config.model;
